@@ -69,7 +69,8 @@ header{background:var(--navy);color:#fff;padding:23px 18px 27px;border-bottom:5p
 </main><div class="toast" id="toast"></div>
 <script>
 const KEY='family-time-ledger-v2';let items=load();let preset='fl';const $=id=>document.getElementById(id);
-function load(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){return []}}
+function load(){try{const value=JSON.parse(localStorage.getItem(KEY)||'[]');return Array.isArray(value)?value:[]}catch(e){return []}}
+function refreshLedger(){try{const value=JSON.parse(localStorage.getItem(KEY)||'[]');if(Array.isArray(value))items=value;}catch(e){}render()}
 function save(){localStorage.setItem(KEY,JSON.stringify(items));render()}
 function id(){return 'VIS-'+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).slice(2,4).toUpperCase()}
 function fmt(m){m=Math.round(m||0);return Math.floor(m/60)+'h '+String(m%60).padStart(2,'0')+'m'}
@@ -134,7 +135,10 @@ function printReport(){let totals={home:0,other:0,both:0,travel:0,help:0};items.
 function toggleCustomInputs(){$('customTravelWrap').style.display=$('travelHours').value==='custom'?'flex':'none';$('customHelpWrap').style.display=$('helpHours').value==='custom'?'flex':'none'}
 $('travelHours').addEventListener('change',toggleCustomInputs);$('helpHours').addEventListener('change',toggleCustomInputs);
 $('filterHouse').addEventListener('change',renderHistory);$('filterDate').addEventListener('change',renderHistory);
-$('date').value=dateToday();choosePreset('fl');toggleCustomInputs();render();
+$('date').value=dateToday();choosePreset('fl');toggleCustomInputs();refreshLedger();
+// Re-read the same local ledger when the PWA opens or returns to the foreground.
+window.addEventListener('pageshow',refreshLedger);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshLedger()});
 </script>
 <script>
 if ('serviceWorker' in navigator) {
