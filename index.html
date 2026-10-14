@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#263b53">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Family Time">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+
+<title>Family Time Ledger</title>
+<style>
+:root{--bg:#f7f3eb;--paper:#fffdf8;--ink:#282b35;--muted:#777783;--line:#e8dfd2;--navy:#263b53;--coral:#dc735d;--gold:#f0c96a;--mint:#d8eadf;--lav:#e9e2f5}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,sans-serif}
+header{background:var(--navy);color:#fff;padding:23px 18px 27px;border-bottom:5px solid var(--gold)}
+.head{max-width:1050px;margin:auto;display:flex;align-items:center;gap:14px}.logo{height:53px;width:53px;display:grid;place-items:center;border-radius:16px;background:var(--gold);color:var(--navy);font-size:26px;transform:rotate(-4deg)}h1{font-size:clamp(23px,4vw,32px);line-height:1.1;margin:0;font-weight:850;letter-spacing:-.04em}.tag{margin:7px 0 0;color:#e4e9ef;font-size:13px}.wrap{max-width:1050px;margin:auto;padding:22px 16px 45px}
+.topline{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:16px}.hello{font-size:13px;color:var(--muted)}.button,button{border:0;border-radius:10px;padding:11px 14px;font:700 13px system-ui;cursor:pointer;background:#eee7db;color:var(--ink)}button.primary{background:var(--coral);color:white}button.dark{background:var(--navy);color:white}button:hover{filter:brightness(.97)}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:18px}.stat{padding:17px;border-radius:16px;background:var(--paper);border:1px solid var(--line)}.stat:nth-child(1){background:#fff1e8}.stat:nth-child(2){background:#eaf1fa}.stat:nth-child(3){background:#e8f3eb}.label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800}.number{font-size:27px;font-weight:850;letter-spacing:-.04em;margin:5px 0 0}.small{font-size:11px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:15px}.box{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:15px}.box h2{font-size:18px;letter-spacing:-.02em;margin:0 0 4px}.desc{font-size:12px;color:var(--muted);margin:0 0 15px}.row{display:flex;justify-content:space-between;align-items:center;gap:12px}.comparison{display:grid;gap:12px}.house{border:1px solid var(--line);border-radius:12px;padding:12px}.househead{display:flex;justify-content:space-between;gap:10px;font-size:13px;font-weight:800}.track{height:8px;background:#eee8de;border-radius:8px;overflow:hidden;margin-top:9px}.fill{height:100%;background:var(--coral);border-radius:8px}.house:nth-child(2) .fill{background:#718bb3}.house:nth-child(3) .fill{background:#78a58a}
+.loglist{display:grid;gap:8px}.logitem{padding:11px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px}.logitem:last-child{border:0}.logitem strong{font-size:13px;display:block}.logitem .meta{font-size:11px;color:var(--muted)}.logitem .time{font-size:13px;font-weight:800;white-space:nowrap}
+.formbox{display:none}.formbox.open{display:block}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field{display:flex;flex-direction:column;gap:5px}.field.full{grid-column:1/-1}label{font-size:11px;font-weight:800;color:#65616a}input,select,textarea{font:inherit;padding:11px;border:1px solid #ddd3c5;border-radius:9px;background:white;color:var(--ink);width:100%;min-width:0}textarea{min-height:65px;resize:vertical}.presets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:9px 0 15px}.preset{background:#f0eafa;border:2px solid transparent;text-align:left;padding:12px;border-radius:12px}.preset.active{border-color:var(--coral);background:#fff0e8}.preset strong{display:block;font-size:13px}.preset span{display:block;font-size:11px;color:var(--muted);margin-top:3px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.filters{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:12px}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}th{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}.badge{font-size:10px;font-weight:800;padding:4px 7px;border-radius:20px;background:#eee7db;white-space:nowrap}.empty{padding:22px;text-align:center;color:var(--muted);font-size:13px}.footer{font-size:11px;color:var(--muted);text-align:center;padding:15px}.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:12px 16px;border-radius:12px;display:none;z-index:10;box-shadow:0 8px 24px #0002}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.cards{gap:8px}.stat{padding:13px}.number{font-size:22px}.box{padding:14px}}
+@media(max-width:480px){.cards{grid-template-columns:1fr 1fr}.stat:last-child{grid-column:1/-1}.formgrid,.filters{grid-template-columns:1fr}.field.full{grid-column:auto}.presets{grid-template-columns:1fr}.head{align-items:flex-start}}
+@media print{body{background:#fff}header{background:#fff;color:#111;border-bottom:2px solid #222;padding:10px 0}.tag{color:#444}.wrap{padding:10px 0}.no-print,.formbox,.topline button{display:none!important}.box,.stat{break-inside:avoid;box-shadow:none}.grid{grid-template-columns:1fr 1fr}.cards{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<header><div class="head"><div class="logo">⏱</div><div><h1>Family Time Ledger</h1><p class="tag">A tiny log for a surprisingly large amount of family time.</p></div></div></header>
+<main class="wrap">
+ <div class="topline"><div><strong>Hey, timekeeper.</strong><div class="hello">Log the visit. Count the hours. Let the math do the talking.</div></div><button class="primary" onclick="openForm()">＋ Log a visit</button></div>
+ <div class="cards"><div class="stat"><div class="label">Total time logged</div><div class="number" id="total">0h 00m</div><div class="small">Travel + helping out</div></div><div class="stat"><div class="label">Time in the car</div><div class="number" id="travel">0h 00m</div><div class="small">Florida trips included</div></div><div class="stat"><div class="label">Helping time</div><div class="number" id="help">0h 00m</div><div class="small">Hands-on assistance</div></div></div>
+ <section class="box formbox" id="formbox">
+  <div class="row"><div><h2 id="formTitle">Log a visit</h2><p class="desc">Three things and you're basically done.</p></div><button onclick="closeForm()">✕</button></div>
+  
+  <div class="box" style="background:#fff7df;border-color:#ead9a7;margin-bottom:15px">
+   <div class="row"><div><h2>⏱️ Live timers</h2><p class="desc">Tap start when the clock starts, stop when it ends. We'll calculate the hours for you.</p></div><span class="badge" id="timerBadge">READY WHEN YOU ARE</span></div>
+   <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
+    <div class="house" style="background:#fffdf8"><div class="househead"><span>🚗 Travel timer</span><span id="travelClock">00:00:00</span></div><div class="small" id="travelTimerState">Not running</div><div class="actions"><button type="button" class="dark" id="startTravel">▶ Start travel</button><button type="button" id="stopTravel" disabled>■ Stop &amp; use time</button></div></div>
+    <div class="house" style="background:#fffdf8"><div class="househead"><span>🧸 Helping timer</span><span id="helpClock">00:00:00</span></div><div class="small" id="helpTimerState">Not running</div><div class="actions"><button type="button" class="dark" id="startHelp">▶ Start helping</button><button type="button" id="stopHelp" disabled>■ Stop &amp; use time</button></div></div>
+   </div>
+   <div class="actions"><button type="button" onclick="resetTimers()">Reset stopped timers</button></div><div class="small" style="margin-top:10px">Timer totals fill the travel/helping fields below. Florida's 10-hour preset can still be selected manually; a stopped travel timer overrides the preset for that visit.</div>
+  </div>
+<form id="form">
+   <input type="hidden" id="editId">
+   <div class="field"><label>WHERE DID THEY GO?</label><div class="presets">
+    <button type="button" class="preset" data-preset="fl" onclick="choosePreset('fl')"><strong>🌴 Florida visit</strong><span>10 hours round-trip travel only</span></button>
+    <button type="button" class="preset" data-preset="local" onclick="choosePreset('local')"><strong>🏡 Local visit</strong><span>No travel added</span></button>
+    <button type="button" class="preset" data-preset="custom" onclick="choosePreset('custom')"><strong>✏️ Other / custom</strong><span>Set travel time yourself</span></button>
+   </div></div>
+   <div class="formgrid">
+    <div class="field"><label for="date">DATE</label><input type="date" id="date" required></div>
+    <div class="field"><label for="household">WHO GOT THE HELP?</label><select id="household"><option value="other">The other household</option><option value="home">Our household</option><option value="both">Shared / both households</option></select></div>
+    <div class="field full"><label for="title">WHAT WAS THE VISIT? (OPTIONAL)</label><input id="title" placeholder="e.g., Weekend babysitting, Florida trip"></div>
+    <div class="field"><label for="travelHours">TRAVEL TIME</label><select id="travelHours"><option value="0">0 hours</option><option value="1">1 hour</option><option value="2">2 hours</option><option value="3">3 hours</option><option value="4">4 hours</option><option value="5">5 hours</option><option value="6">6 hours</option><option value="7">7 hours</option><option value="8">8 hours</option><option value="9">9 hours</option><option value="10" selected>10 hours — Florida round trip</option><option value="12">12 hours</option><option value="custom">Enter a custom amount…</option><option value="14">14 hours</option><option value="16">16 hours</option><option value="18">18 hours</option><option value="20">20 hours</option><option value="24">24 hours</option><option value="30">30 hours</option><option value="36">36 hours</option><option value="48">48 hours</option><option value="60">60 hours</option><option value="72">72 hours</option></select></div>
+    <div class="field" id="customTravelWrap" style="display:none"><label for="customTravel">CUSTOM TRAVEL TIME (HOURS)</label><input id="customTravel" type="number" min="0" step="0.25" placeholder="e.g., 11.5"></div>
+    <div class="field"><label for="helpHours">TIME SPENT HELPING</label><div class="small">After 24 hours, choose days instead.</div><select id="helpHours"><option value="0">Not sure / 0 hours</option><option value="1">1 hour</option><option value="2">2 hours</option><option value="3">3 hours</option><option value="4">4 hours</option><option value="5">5 hours</option><option value="6">6 hours</option><option value="7">7 hours</option><option value="8">8 hours</option><option value="10">10 hours</option><option value="12">12 hours</option><option value="18">18 hours</option><option value="24">24 hours (1 day)</option><option disabled>— Longer stays —</option><option value="48">2 days</option><option value="72">3 days</option><option value="96">4 days</option><option value="120">5 days</option><option value="144">6 days</option><option value="168">7 days (1 week)</option><option value="custom">Enter a custom amount…</option></select></div>
+    <div class="field full"><label for="notes">NOTES (OPTIONAL)</label><textarea id="notes" placeholder="Anything worth remembering…"></textarea></div>
+   </div>
+   <div class="actions"><button class="primary" type="submit">Save this visit</button><button type="button" onclick="closeForm()">Cancel</button></div>
+  </form>
+ </section>
+ <div class="grid">
+  <section class="box"><div class="row"><div><h2>Who got the time?</h2><p class="desc">Totals for each household, all recorded visits.</p></div><span class="badge">LIVE TOTALS</span></div><div id="compare" class="comparison"></div></section>
+  <section class="box"><div class="row"><div><h2>Recent visits</h2><p class="desc">Your latest ledger entries.</p></div><button class="no-print" onclick="showHistory()">All visits</button></div><div id="recent" class="loglist"></div></section>
+ </div>
+ <section class="box" id="historyBox" style="display:none"><div class="row"><div><h2>All visits</h2><p class="desc">Edit or remove a record whenever you need.</p></div><button onclick="hideHistory()">Close</button></div><div class="filters"><div class="field"><label for="filterHouse">HOUSEHOLD</label><select id="filterHouse"><option value="all">Everyone</option><option value="other">Other household</option><option value="home">Our household</option><option value="both">Shared</option></select></div><div class="field"><label for="filterDate">FROM DATE</label><input type="date" id="filterDate"></div></div><div id="history" class="tablewrap"></div></section>
+ <section class="box"><div class="row"><div><h2>Official paperwork (ish)</h2><p class="desc">Print a summary or back up your data. Everything stays in this browser.</p></div></div><div class="actions no-print"><button class="dark" onclick="printReport()">🖨 Print summary</button><button onclick="exportBackup()">⬇ Backup data</button><button onclick="$('importFile').click()">⬆ Restore backup</button><button onclick="exportCSV()">Export CSV</button><input id="importFile" type="file" accept=".json,application/json" style="display:none"></div><p class="small">Tip: export a backup once in a while. Browser data can disappear if you clear your history/site data.</p></section>
+ <div class="footer">Built for personal recordkeeping. The ledger counts hours, not motives. · Local-only edition</div>
+</main><div class="toast" id="toast"></div>
+<script>
+const KEY='family-time-ledger-v2';let items=load();let preset='fl';const $=id=>document.getElementById(id);
+function load(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){return []}}
+function save(){localStorage.setItem(KEY,JSON.stringify(items));render()}
+function id(){return 'VIS-'+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).slice(2,4).toUpperCase()}
+function fmt(m){m=Math.round(m||0);return Math.floor(m/60)+'h '+String(m%60).padStart(2,'0')+'m'}
+function dateToday(){let d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function homeName(h){return h==='home'?'Our household':h==='other'?'Other household':'Shared / both'}
+function openForm(){ $('formbox').classList.add('open');window.scrollTo({top:$('formbox').offsetTop-10,behavior:'smooth'});if(!$('editId').value){$('date').value=dateToday();choosePreset('fl')}}
+function closeForm(){$('formbox').classList.remove('open');$('form').reset();$('editId').value='';$('formTitle').textContent='Log a visit';choosePreset('fl');toggleCustomInputs()}
+function choosePreset(p){preset=p;document.querySelectorAll('.preset').forEach(b=>b.classList.toggle('active',b.dataset.preset===p));if(p==='fl'){$('travelHours').value='10';if(!$('title').value||$('title').value==='Florida visit')$('title').value='Florida visit'}else if(p==='local'){$('travelHours').value='0';if($('title').value==='Florida visit')$('title').value='Local visit'}else{$('travelHours').value='0';if($('title').value==='Florida visit')$('title').value=''}}
+function render(){let total=0,travel=0,help=0;items.forEach(x=>{total+=x.travel+x.help;travel+=x.travel;help+=x.help});$('total').textContent=fmt(total);$('travel').textContent=fmt(travel);$('help').textContent=fmt(help);
+let vals=['home','other','both'].map(h=>({h,name:homeName(h),m:items.filter(x=>x.household===h).reduce((a,x)=>a+x.travel+x.help,0)}));let max=Math.max(1,...vals.map(x=>x.m));$('compare').innerHTML=vals.map(v=>`<div class="house"><div class="househead"><span>${v.name}</span><span>${fmt(v.m)}</span></div><div class="track"><div class="fill" style="width:${v.m/max*100}%"></div></div></div>`).join('');
+let recent=[...items].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,5);$('recent').innerHTML=recent.length?recent.map(x=>`<div class="logitem"><div><strong>${esc(x.title||'Family visit')}</strong><div class="meta">${esc(x.date)} · ${esc(homeName(x.household))}</div><div class="meta">${fmt(x.travel)} travel + ${fmt(x.help)} helping</div></div><div class="time">${fmt(x.travel+x.help)}</div></div>`).join(''):'<div class="empty">No visits logged yet. Tap “Log a visit” to start the official unofficial record. 📝</div>';renderHistory()}
+function renderHistory(){let h=$('filterHouse').value,d=$('filterDate').value;let a=[...items].filter(x=>(h==='all'||x.household===h)&&(!d||x.date>=d)).sort((x,y)=>y.date.localeCompare(x.date));$('history').innerHTML=a.length?`<table><thead><tr><th>Date / visit</th><th>Household</th><th>Travel</th><th>Helping</th><th>Total</th><th></th></tr></thead><tbody>${a.map(x=>`<tr><td><strong>${esc(x.title||'Family visit')}</strong><div class="small">${esc(x.date)} · ${esc(x.notes||'')}</div></td><td>${esc(homeName(x.household))}</td><td>${fmt(x.travel)}</td><td>${fmt(x.help)}</td><td><strong>${fmt(x.travel+x.help)}</strong></td><td><button onclick="edit('${x.id}')">Edit</button> <button onclick="removeItem('${x.id}')">✕</button></td></tr>`).join('')}</tbody></table>`:'<div class="empty">No visits match these filters.</div>'}
+function showHistory(){$('historyBox').style.display='block';renderHistory();$('historyBox').scrollIntoView({behavior:'smooth'})}function hideHistory(){$('historyBox').style.display='none'}
+
+const liveTimers={travel:null,help:null};
+const timerElapsed={travel:0,help:0};
+function timerFormat(ms){let sec=Math.max(0,Math.floor(ms/1000));let h=Math.floor(sec/3600),m=Math.floor((sec%3600)/60),s=sec%60;return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')}
+function paintTimers(){
+ for(const k of ['travel','help']){
+  const start=liveTimers[k], elapsed=timerElapsed[k]+(start?Date.now()-start:0);
+  $(k==='travel'?'travelClock':'helpClock').textContent=timerFormat(elapsed);
+  $(k==='travel'?'startTravel':'startHelp').disabled=!!start;
+  $(k==='travel'?'stopTravel':'stopHelp').disabled=!start;
+  $(k==='travel'?'travelTimerState':'helpTimerState').textContent=start?'Running since '+new Date(start).toLocaleTimeString([], {hour:'numeric',minute:'2-digit'}):(timerElapsed[k]?'Stopped — '+(timerElapsed[k]/60000).toFixed(1)+' min':'Not running');
+ }
+ $('timerBadge').textContent=(liveTimers.travel||liveTimers.help)?'TIMER IN PROGRESS':'READY WHEN YOU ARE';
+}
+function resetTimers(){if(liveTimers.travel||liveTimers.help){toast('Stop running timers before resetting.');return}if(!confirm('Reset both stopped timers?'))return;timerElapsed.travel=0;timerElapsed.help=0;paintTimers();toast('Timers reset.')}
+function startTimer(k){
+ if(liveTimers[k])return;
+ liveTimers[k]=Date.now();paintTimers();toast((k==='travel'?'Travel':'Helping')+' timer started.');
+}
+function stopTimer(k){
+ if(!liveTimers[k])return;
+ timerElapsed[k]+=Date.now()-liveTimers[k];liveTimers[k]=null;
+ const hours=timerElapsed[k]/3600000;
+ const select=$(k==='travel'?'travelHours':'helpHours');
+ const custom=$(k==='travel'?'customTravel':'customHelp');
+ // Timer duration is entered as an exact decimal-hour value, with quarter-hour rounding to keep the log easy to use.
+ const rounded=Math.round(hours*4)/4;
+ const matching=[...select.options].find(o=>o.value!=='custom'&&Number(o.value)===rounded);
+ if(matching){select.value=matching.value;custom.value='';}
+ else {select.value='custom';custom.value=String(rounded);}
+ toggleCustomInputs();paintTimers();toast('Timer stopped: '+rounded+' hours added to the form.');
+}
+$('startTravel').addEventListener('click',()=>startTimer('travel'));
+$('stopTravel').addEventListener('click',()=>stopTimer('travel'));
+$('startHelp').addEventListener('click',()=>startTimer('help'));
+$('stopHelp').addEventListener('click',()=>stopTimer('help'));
+setInterval(paintTimers,1000);
+
+$('form').addEventListener('submit',e=>{e.preventDefault();let record={id:$('editId').value||id(),date:$('date').value,household:$('household').value,title:$('title').value.trim(),travel:($('travelHours').value==='custom'?Number($('customTravel').value||0):Number($('travelHours').value))*60,help:($('helpHours').value==='custom'?Number($('customHelp').value||0):Number($('helpHours').value))*60,notes:$('notes').value.trim()};let idx=items.findIndex(x=>x.id===record.id);if(idx>=0)items[idx]=record;else items.push(record);save();closeForm();toast(idx>=0?'Visit updated. Ledger amended.':'Visit logged. The hours have been counted.');});
+function edit(key){let x=items.find(x=>x.id===key);if(!x)return;openForm();$('formTitle').textContent='Edit this visit';$('editId').value=x.id;$('date').value=x.date;$('household').value=x.household;$('title').value=x.title;if([...$('travelHours').options].some(o=>o.value===String(x.travel/60))){$('travelHours').value=String(x.travel/60)}else{$('travelHours').value='custom';$('customTravel').value=String(x.travel/60)}if([...$('helpHours').options].some(o=>o.value===String(x.help/60))){$('helpHours').value=String(x.help/60)}else{$('helpHours').value='custom';$('customHelp').value=String(x.help/60)}toggleCustomInputs();$('notes').value=x.notes;choosePreset(x.travel===600?'fl':x.travel===0?'local':'custom')}
+function removeItem(key){if(!confirm('Remove this visit from the ledger?'))return;items=items.filter(x=>x.id!==key);save();toast('Visit removed.')}
+function toast(t){$('toast').textContent=t;$('toast').style.display='block';setTimeout(()=>$('toast').style.display='none',2400)}
+function exportBackup(){download(new Blob([JSON.stringify({app:'Family Time Ledger',version:2,exportedAt:new Date().toISOString(),items},null,2)],{type:'application/json'}),'family-time-ledger-backup.json')}
+function exportCSV(){let rows=[['Date','Visit','Household','Travel minutes','Helping minutes','Total minutes','Notes'],...items.map(x=>[x.date,x.title,homeName(x.household),x.travel,x.help,x.travel+x.help,x.notes])];download(new Blob(['\ufeff'+rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n')],{type:'text/csv;charset=utf-8'}),'family-time-ledger.csv')}
+function download(blob,name){let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+$('importFile').addEventListener('change',async e=>{let f=e.target.files[0];if(!f)return;try{let d=JSON.parse(await f.text()),incoming=Array.isArray(d)?d:d.items;if(!Array.isArray(incoming)||!incoming.every(x=>x.date&&typeof x.travel==='number'&&typeof x.help==='number'))throw Error('That file does not look like a Family Time Ledger backup.');if(confirm('Restore '+incoming.length+' visits? This replaces the current ledger. Export a backup first if needed.')){items=incoming;save();toast('Backup restored. Welcome back to the ledger.')}}catch(err){alert('Could not restore backup: '+err.message)}e.target.value=''});
+function printReport(){let totals={home:0,other:0,both:0,travel:0,help:0};items.forEach(x=>{totals[x.household]+=x.travel+x.help;totals.travel+=x.travel;totals.help+=x.help});let old=document.getElementById('printSummary');if(old)old.remove();let d=document.createElement('section');d.id='printSummary';d.innerHTML=`<h2>Family Time Ledger — Summary</h2><p>Generated ${new Date().toLocaleDateString()}</p><p><b>Total logged:</b> ${fmt(totals.travel+totals.help)} &nbsp; <b>Travel:</b> ${fmt(totals.travel)} &nbsp; <b>Helping:</b> ${fmt(totals.help)}</p><h3>By household</h3><p>Our household: ${fmt(totals.home)}<br>Other household: ${fmt(totals.other)}<br>Shared / both: ${fmt(totals.both)}</p><h3>Visit log</h3><table><thead><tr><th>Date</th><th>Visit</th><th>Household</th><th>Travel</th><th>Helping</th><th>Total</th></tr></thead><tbody>${[...items].sort((a,b)=>a.date.localeCompare(b.date)).map(x=>`<tr><td>${esc(x.date)}</td><td>${esc(x.title||'Family visit')}</td><td>${esc(homeName(x.household))}</td><td>${fmt(x.travel)}</td><td>${fmt(x.help)}</td><td>${fmt(x.travel+x.help)}</td></tr>`).join('')}</tbody></table><p style="margin-top:25px;font-size:10px">Personal record of reported hours. This summary documents time entries; it does not infer motives or obligations.</p>`;document.querySelector('main').prepend(d);window.print();d.remove()}
+function toggleCustomInputs(){$('customTravelWrap').style.display=$('travelHours').value==='custom'?'flex':'none';$('customHelpWrap').style.display=$('helpHours').value==='custom'?'flex':'none'}
+$('travelHours').addEventListener('change',toggleCustomInputs);$('helpHours').addEventListener('change',toggleCustomInputs);
+$('filterHouse').addEventListener('change',renderHistory);$('filterDate').addEventListener('change',renderHistory);
+$('date').value=dateToday();choosePreset('fl');toggleCustomInputs();render();
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));
+}
+</script>
+</body></html>
